@@ -72,9 +72,12 @@ This README is missing documentation of your endpoints. Below is an example for 
 
 Endpoints
 GET '/categories'
-GET ...
-POST ...
-DELETE ...
+GET '/questions'
+GET '/categories/<category_id>/questions'
+POST '/questions'
+POST '/questions/search'
+POST '/quizzes'
+DELETE '/questions/<question_id>'
 
 GET '/categories'
 - Fetches a dictionary of categories in which the keys are the ids and the value is the corresponding string of the category
@@ -87,7 +90,167 @@ GET '/categories'
 '5' : "Entertainment",
 '6' : "Sports"}
 
+
+
 ```
+
+GET '/questions'
+- Fetches a dictionary of categories in which the keys are the ids and the value is the corresponding string of the category as well as a dictionary of questions in which the keys are the ids and the values are ID, question, answer, category and difficulty.
+
+- Request Arguments: None
+
+- Returns: An object with four keys: message, question, total questions and categories 
+
+{
+'message':True,
+'questions':formated_questions[start:end],
+'totalQuestions': len(formated_questions),
+'categories': formated_categories
+}
+
+- Questions is an object with five keys, id being the primary key. in the current setting a maximum of 10 questions will be shown 
+
+{'id': 5,
+'question': "Whose autobiography is entitled 'I Know Why the Caged bird Sings'?",
+'answer': 'Maya Angelou',
+'category': 4,
+'difficulty': 2
+}
+
+- totalQuestions returns the amount of all questions
+
+- categories returns all categories. See GET '/categories'
+
+
+
+```
+
+GET '/categories/<category_id>/questions'
+
+- Fetches a dictionary of questions from a selected category ID.
+
+- Request Arguments: Category ID 
+
+- Returns: An object with four keys: message, question, total questions, categories and current category 
+
+{
+message':True,
+'questions':formated_questions[start:end],
+'totalQuestions': len(formated_questions),
+'categories': formated_categories,
+'currentCategory': category_id
+}
+
+- Questions is an object with five keys, id being the primary key. in the current setting a maximum of 10 questions will be shown 
+
+{'id': 5,
+'question': "Whose autobiography is entitled 'I Know Why the Caged bird Sings'?",
+'answer': 'Maya Angelou',
+'category': 4,
+'difficulty': 2
+}
+
+- totalQuestions returns the amount of all questions
+
+- categories returns all categories. See GET '/categories'
+
+- current categorie returns the current category id number
+
+
+
+```
+
+POST '/questions'
+
+- Puts a new question into the databes
+
+- Request Arguments: question, answer, category and difficulty as an json e.g.
+
+{
+'question': "Whose autobiography is entitled 'I Know Why the Caged bird Sings'?",
+'answer': 'Maya Angelou',
+'category': 4,
+'difficulty': 2
+}
+
+
+- Returns a success if sucessfully run  
+
+
+
+```
+
+POST '/questions/search'
+
+- Fetches different questions, which match the search term
+
+- Request Arguments: searchTerm 
+
+- Returns: An object with three keys: message, question, total questions 
+
+{
+'message':True,
+'questions': formated_questions,
+'totalQuestions':  len(formated_questions),
+}
+
+- Questions is an object with five keys, id being the primary key. in the current setting a maximum of 10 questions will be shown 
+
+{
+'id': 5,
+'question': "Whose autobiography is entitled 'I Know Why the Caged bird Sings'?",
+'answer': 'Maya Angelou',
+'category': 4,
+'difficulty': 2
+}
+
+- totalQuestions returns the amount of all questions
+
+
+```
+
+
+POST '/quizzes'
+
+- Fetches a dictionary of questions for the quiz. 
+
+- Request Arguments: None
+
+- Optional Arguments: Quiz catogery 
+
+- Returns: An object with two keys: success and question
+
+{
+'success': True,
+'question':result,
+}
+
+- Questions is an object with five keys, id being the primary key.  
+
+{'id': 5,
+'question': "Whose autobiography is entitled 'I Know Why the Caged bird Sings'?",
+'answer': 'Maya Angelou',
+'category': 4,
+'difficulty': 2
+}
+
+
+```
+
+DELETE '/questions/<question_id>'
+
+
+- Deletes a question by its ID 
+
+- Request Arguments: question_id
+
+- Returns: Sucess if it worked
+
+{
+'success':True
+}
+
+
 
 
 ## Testing

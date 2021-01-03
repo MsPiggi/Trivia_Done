@@ -73,6 +73,33 @@ class TriviaTestCase(unittest.TestCase):
         self.assertEqual(data['success'], True)
         self.assertEqual(data['message'], "Sucessfully created")
 
+
+    def test_question_search(self):
+                
+        search_term = {
+            'searchTerm':'Whose'
+            }
+        
+        res = self.client().post('/questions/search', json=search_term)
+        data = json.loads(res.data)
+
+        self.assertEqual(res.status_code, 200)
+        self.assertEqual(data['message'], True)
+        self.assertTrue(data['questions'])
+
+        search_term = {
+            'searchTerm':'23454?234? there cant be a question like this ever!'
+            }
+        
+        res = self.client().post('/questions/search', json=search_term)
+        data = json.loads(res.data)
+
+        self.assertEqual(res.status_code, 422)
+
+
+
+
+
     def test_delete_question(self):    
         res = self.client().delete('/questions/2')
         data = json.loads(res.data)
